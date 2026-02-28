@@ -1,0 +1,29 @@
+body {
+    background-color: #d040f0
+}
+
+.textButton {
+    margin-bottom: 5px;
+    background-color: #40f040;
+    padding: 2px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+/* Menu Bar */
+#menuTable {
+    width: 100%;
+    background-color: #f080f0;
+}
+
+#menuOptionsCell {
+    text-align: right;
+}
+
+/* Stage */
+#stageHost {
+    border: 2px solid black;
+}

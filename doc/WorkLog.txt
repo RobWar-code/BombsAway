@@ -2,8 +2,32 @@ Work Log
 
 Jobs Due
 
-    Do the README
+    Create the index.html with Konva graphics incorporated
+        (see game fireflies)
+        Do the menu (home/intro/restart)
 
-    Set-up git
+    Create main.js as a module
+        Do initial stage scaling
+
+    Assemble Graphics
+        Aircraft
+            Leftward toward
+            Rightward toward
+            Tail view leftward
+            Tail view rightward
+        AA Gun
+        City Buildings
+        City Buildings bombed
+        Skyscape
+            4 sizes
+        Speaker Icon 
+        Favicon
+        Game Icon
+        
+    * Do the initial analysis
+
+    * Do the README
+
+    * Set-up git
 
 Jobs Done

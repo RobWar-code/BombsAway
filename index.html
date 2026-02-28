@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.png" sizes="32x32" type="image/x-icon">
+    <link rel="stylesheet" href="src/styles/styles.css">
+    <title>Bombs Away</title>
+    <meta name="description" content="An interactive, animated game" />
+    <meta name="keywords" content="aircraft, gun, bombs, game, interactive game, animated game" />
+</head>
+<body>
+    <!-- Menu -->
+    <table id="menuTable">
+        <tr id="menuRow">
+            <td id="menuLogoCell">
+                <img src="assets/images/bomber01.png" width="120" height="60">
+            </td>
+            <td id="menuTitleCell">Bombs Away - war action</td>
+            <td id="menuOptionsCell">
+                <button class="textButton" id="restartButton">Restart</button>
+                <button class="textButton" id="introBtn">Intro</button>
+                <button class="textButton" id="homeBtn">Home</button>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Konva Stage -->
+    <div class="row">
+        <div id="stageHost" aria-label="Konva stage host"></div>
+    </div>
+
+<script src="https://unpkg.com/konva@9/konva.min.js"></script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

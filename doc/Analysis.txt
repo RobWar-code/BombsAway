@@ -1,0 +1,118 @@
+Bombs Away Analysis
+
+Contents
+    Introduction
+    Technology
+    Game Play
+    Display Layout
+        Stage Area
+            Stage Graphic Scaling
+            Aircraft Motion
+    Sound Effects
+
+<h1>Introduction
+    Bombs Away is a game for one player, in which the objective is to
+    shoot down as many bomber planes as possible to defend the city
+    buildings from their bombs.
+
+    Points are scored for each plane shot down and lost for each building
+    bombed.
+
+<h1>Technology
+    The system is built using Javascript, HTML, CSS and Konva Graphics.
+
+<h1>Game Play
+    Aircraft appear at any point in the upper half of the display.
+    They are scaled for distance into the Z coordinates.
+
+    As the aircraft approach the city, the player must drag the gun (left
+    or right) to the correct position to intercept the aircraft when
+    it comes within Z-range.
+
+    The player touches the fire button to attempt to intercept the
+    aircraft.
+
+    When the aircraft comes within range of the city it drops its
+    bombs (up to 4) on the buildings below.
+
+    The player scores points for destroying an aircraft and loses points
+    for buildings bombed.
+
+    Play continues until a set number of raids have been executed
+
+<h1>Display Layout
+    The display consists of
+        Game Introduction Panel
+        Menu Bar
+        Stage Area for the Graphics
+        Sound On/Off Button
+        Current Score 
+
+<h2>Stage Area
+    The stage area is composed using Konva Graphics with chatGPT originated
+    images edited as required.
+
+    The background of the stage a slightly cloudy day-time sky.
+
+    The cityscape is the next layer and is composed of an arrangement of
+    building images. Each building is a separate image and has an intact
+    and bombed-out representation. Buildings are presented as random 
+    sequences from the set.
+
+    A layer is used to carry the aircraft on their flights across the
+    stage and to represent the falling bombs.
+
+    The next layer is the anti-aircraft gun, which can be moved left or right
+    by dragging. In the group with the gun is the fire button, which when clicked
+    fires a missile in the same layer as the aircraft.
+
+<h3>Stage Graphic Scaling
+
+    Four stage sizes are catered for:
+        360 x 500
+        600 x 500
+        900 x 500
+        1200 x 500
+
+    The game factors are adjusted according to the display-width detected at 
+    start-up.
+
+    The background sky image is provided in each of these proportions.
+
+    The cityscape has the number of buildings dependent on the screen width.
+
+<h3>Aircraft Motion
+
+    Aircraft appear at small scale in the upper portion of the stage. They 
+    then travel through the Z dimension (by scaling) as well as the X and Y.
+    They move in smooth curves toward the city (FlyOver, Figure of 8 or 
+    ellipse in Z and X on a single Y Plane)
+
+    The Z dimension ranges from 500 to 0 (at which the plane disappears).
+
+    In the course of its journey through Z, the length of the plane image ranges 
+    from 20 pixels to 70. The image of the aircraft has an approaching view and a 
+    tail-on retreating view. It also has leftward and rightward views, depending
+    on the relative x-coordinate of the centre of the stage.
+
+    When they reach Z <= 20 they release their bombs which destroy any 
+    buildings in the path of the bombs. Each plane has 4 bombs.
+
+    The anti-aircraft fire must be x/y accurate in the Z aircraft range 50 to 0.
+
+    Consider an "Enemy Range" Indicator on the display.
+
+<h1>Sound Effects
+    Sound Effects are optional and are initially set to OFF. They can be
+    enabled by the player by clicking the speaker button on the lower portion
+    of the display. When ON the sound can be turned OFF of by clicking the
+    speaker button again.
+
+    Sound effects are implemented using the Javascript sound library.
+    (see Projects/JSTest/SoundEffects).
+
+    The sounds are: 
+        Flying AirCraft
+        Bomb Explosion
+        AA Gun fire
+        Aircraft Explosion
