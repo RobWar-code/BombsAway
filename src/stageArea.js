@@ -15,11 +15,12 @@ export const stageArea = {
     currentStageHeight: 500,
 
     images: [],
-    numBuildingImages: 1,
+    numBuildingImages: 12,
     numBuildings: 10,
-    buildingWidth: 36,
-    buildingHeight: 50,
-    buildingSet: [],
+    buildingWidth: 40,
+    buildingHeight: 70,
+    buildingList: [], // Building Image No.s {id: "", bombed: false}
+    buildingSet: [], // Image Nodes
 
     async initialise() {
         // Find the appropriate stage size
@@ -68,46 +69,58 @@ export const stageArea = {
 
     getBuildings() {
         this.numBuildings = Math.floor(this.currentStageWidth / this.buildingWidth);
-        let set = [];
+        let selectionSet = []
+        this.buildingList = [];
+
+        // Create the selection set
+        for (let i = 1; i <= this.numBuildingImages; i++) {
+            selectionSet.push(i);
+        }
+        // Shuffle the set
+        selectionSet = this.shuffleSet(selectionSet);
 
         // Select the list of buildings
         let count = 0;
         while (count < this.numBuildings) {
             for (let i = 1; i <= this.numBuildingImages; i++) {
-                set.push(i);
+                let id = selectionSet[i] + "";
+                if (selectionSet[i] < 10) id = "0" + id;
+                let item = {id: id, bombed: false};
+                this.buildingList.push(item);
                 ++count;
                 if (count >= this.numBuildings) break;
             }
+            if (count < this.numBuildings) {
+                selectionSet = this.shuffleSet(selectionSet);
+            }
         }
 
-        // Shuffle the set
-        this.shuffleSet(set);
-
         this.buildingSet = [];
-        for (let i = 0; i < this.numBuildings; i++) {
-            let buildingNum = set[i];
-            let id = buildingNum + "";
-            if (buildingNum < 10) id = "0" + id;
+        let index = 0;
+        for (let building of this.buildingList) {
+            let id = building.id;
             let buildingImage = this.images[`building${id}`];
             let buildingNode = new Konva.Image({
                 image: buildingImage,
-                x: i * this.buildingWidth,
+                x: index * this.buildingWidth,
                 y: this.currentStageHeight - this.buildingHeight,
                 width: this.buildingWidth,   // scales the cropped region to this size
                 height: this.buildingHeight
             });
             this.buildingSet.push(buildingNode);
+            ++index;
         }
     },
 
     shuffleSet(set) {
         for (let i = 0; i < set.length; i++) {
-            let r1 = Math.floor(Math.random() * this.numBuildings);
-            let r2 = Math.floor(Math.random() * this.numBuildings);
+            let r1 = Math.floor(Math.random() * set.length);
+            let r2 = Math.floor(Math.random() * set.length);
             let x = set[r1];
             set[r1] = set[r2];
             set[r2] = x;
         }
+        return set;
     },
 
     drawScene() {
@@ -138,7 +151,7 @@ export const stageArea = {
         // Buildings
         for (let i = 0; i < this.numBuildingImages; i++) {
             let id = i + 1 + "";
-            if (i < 10) id = "0" + id;
+            if (i < 9) id = "0" + id;
             let url = `assets/images/building${id}.png`;
             let varName = `building${id}`;
             await this.loadImage(url, varName);
