@@ -4,6 +4,9 @@ export const stageArea = {
     stage: null,
     mainImageLayer: new Konva.Layer(),
     buildingGroup: new Konva.Group(),
+    gunLayer: new Konva.Layer(),
+    gunGroup: new Konva.Group(),
+
     stageSizeNum: 0,
     stageSizes: [
         {width: 1200, height: 500, thresholdWidth: 1260},
@@ -15,12 +18,16 @@ export const stageArea = {
     currentStageHeight: 500,
 
     images: [],
+    foregroundStripHeight: 40,
     numBuildingImages: 12,
     numBuildings: 10,
     buildingWidth: 40,
     buildingHeight: 70,
     buildingList: [], // Building Image No.s {id: "", bombed: false}
     buildingSet: [], // Image Nodes
+    gunHeight: 90,
+    gunWidth: 65,
+    gunBase: 5,
 
     async initialise() {
         // Find the appropriate stage size
@@ -61,8 +68,26 @@ export const stageArea = {
             height: this.currentStageHeight
         });
 
+        // Foreground Strip
+        this.foregroundNode = new Konva.Image({
+            image: this.images['foreground'],
+            x: 0,
+            y: this.currentStageHeight - this.foregroundStripHeight,
+            width: this.currentStageWidth,
+            height: this.foregroundStripHeight
+        })
+
         // Buildings
         this.getBuildings();
+
+        // AA Gun
+        this.AAGunNode = new Konva.Image({
+            image: this.images['AAGun'],
+            x: this.currentStageWidth/2 - this.gunWidth/2,
+            y: this.currentStageHeight - this.gunHeight - this.gunBase,
+            width: this.gunWidth,
+            height: this.gunHeight
+        });
 
         this.drawScene();
     },
@@ -82,7 +107,7 @@ export const stageArea = {
         // Select the list of buildings
         let count = 0;
         while (count < this.numBuildings) {
-            for (let i = 1; i <= this.numBuildingImages; i++) {
+            for (let i = 0; i < this.numBuildingImages; i++) {
                 let id = selectionSet[i] + "";
                 if (selectionSet[i] < 10) id = "0" + id;
                 let item = {id: id, bombed: false};
@@ -103,7 +128,7 @@ export const stageArea = {
             let buildingNode = new Konva.Image({
                 image: buildingImage,
                 x: index * this.buildingWidth,
-                y: this.currentStageHeight - this.buildingHeight,
+                y: this.currentStageHeight - this.buildingHeight - this.foregroundStripHeight,
                 width: this.buildingWidth,   // scales the cropped region to this size
                 height: this.buildingHeight
             });
@@ -128,6 +153,7 @@ export const stageArea = {
         this.stage.destroyChildren();
         this.mainImageLayer.destroyChildren();
         this.mainImageLayer.add(this.backgroundNode);
+        this.mainImageLayer.add(this.foregroundNode);
 
         // Set-up the building group
         this.buildingGroup.destroyChildren();
@@ -136,6 +162,13 @@ export const stageArea = {
         }
         this.mainImageLayer.add(this.buildingGroup);
         this.stage.add(this.mainImageLayer);
+
+        // AA Gun
+        this.gunLayer.destroyChildren();
+        this.gunGroup.destroyChildren();
+        this.gunGroup.add(this.AAGunNode);
+        this.gunLayer.add(this.gunGroup);
+        this.stage.add(this.gunLayer);
 
         // Draw the Scene
         this.stage.batchDraw();
@@ -148,6 +181,12 @@ export const stageArea = {
             let varName = `skyscape0${i + 1}`;
             await this.loadImage(url, varName);
         }
+
+        // Foreground Strip
+        let url = "assets/images/foreground.png";
+        let varName = "foreground";
+        await this.loadImage(url, varName);
+
         // Buildings
         for (let i = 0; i < this.numBuildingImages; i++) {
             let id = i + 1 + "";
@@ -156,6 +195,11 @@ export const stageArea = {
             let varName = `building${id}`;
             await this.loadImage(url, varName);
         }
+
+        // AA Gun
+        url = "assets/images/AAGun03.png";
+        varName = "AAGun";
+        await this.loadImage(url, varName);
     },
 
     loadImage(url, varName, crossOrigin = 'anonymous') {
