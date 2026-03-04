@@ -28,6 +28,8 @@ export const stageArea = {
     gunHeight: 90,
     gunWidth: 65,
     gunBase: 5,
+    fireButtonWidth: 40,
+    firButtonHeight: 40,
 
     async initialise() {
         // Find the appropriate stage size
@@ -83,10 +85,18 @@ export const stageArea = {
         // AA Gun
         this.AAGunNode = new Konva.Image({
             image: this.images['AAGun'],
-            x: this.currentStageWidth/2 - this.gunWidth/2,
-            y: this.currentStageHeight - this.gunHeight - this.gunBase,
+            x: 0,
+            y: 0,
             width: this.gunWidth,
             height: this.gunHeight
+        });
+
+        this.fireButtonNode = new Konva.Image({
+            image: this.images['fireButton'],
+            x: this.gunWidth / 2 - this.fireButtonWidth / 2,
+            y: this.gunHeight / 4,
+            width: this.firebuttonWidth,
+            height: this.fireButtonHeight 
         });
 
         this.drawScene();
@@ -166,7 +176,14 @@ export const stageArea = {
         // AA Gun
         this.gunLayer.destroyChildren();
         this.gunGroup.destroyChildren();
+        this.gunGroup.position(
+            {
+                x: this.currentStageWidth / 2 - this.gunWidth / 2,
+                y: this.currentStageHeight - this.gunHeight - this.gunBase
+            }
+        );
         this.gunGroup.add(this.AAGunNode);
+        this.gunGroup.add(this.fireButtonNode);
         this.gunLayer.add(this.gunGroup);
         this.stage.add(this.gunLayer);
 
@@ -199,6 +216,10 @@ export const stageArea = {
         // AA Gun
         url = "assets/images/AAGun03.png";
         varName = "AAGun";
+        await this.loadImage(url, varName);
+
+        url = "assets/images/fireButton.png";
+        varName = "fireButton";
         await this.loadImage(url, varName);
     },
 
