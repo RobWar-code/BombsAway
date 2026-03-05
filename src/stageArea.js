@@ -6,6 +6,7 @@ export const stageArea = {
     buildingGroup: new Konva.Group(),
     gunLayer: new Konva.Layer(),
     gunGroup: new Konva.Group(),
+    aircraftLayer: new Konva.Layer(),
 
     stageSizeNum: 0,
     stageSizes: [
@@ -29,7 +30,14 @@ export const stageArea = {
     gunWidth: 65,
     gunBase: 5,
     fireButtonWidth: 40,
-    firButtonHeight: 40,
+    fireButtonHeight: 40,
+    // Bomber
+    bomberHorizon: 300,
+    minBomberY: 50,
+    minBomberWidth: 30,
+    maxBomberWidth: 100,
+    minBomberHeight: 12,
+    maxBomberHeight: 40,
 
     async initialise() {
         // Find the appropriate stage size
@@ -99,6 +107,15 @@ export const stageArea = {
             height: this.fireButtonHeight 
         });
 
+        // Aircraft Nodes
+        this.bomberNode = new Konva.Image({
+            image: this.images['bomberFront'],
+            x: this.currentStageWidth / 2 - this.minBomberWidth / 2,
+            y: this.bomberHorizon,
+            width: this.minBomberWidth,
+            height: this.minBomberHeight
+        });
+
         this.drawScene();
     },
 
@@ -158,6 +175,14 @@ export const stageArea = {
         return set;
     },
 
+    setBomber(x, y, w, h) {
+        this.bomberNode.x(x);
+        this.bomberNode.y(y);
+        this.bomberNode.width(w);
+        this.bomberNode.height(h);
+        this.aircraftLayer.draw();
+    },
+
     drawScene() {
         // Add the background to the layer
         this.stage.destroyChildren();
@@ -182,10 +207,21 @@ export const stageArea = {
                 y: this.currentStageHeight - this.gunHeight - this.gunBase
             }
         );
+        this.gunGroup.draggable(true);
+        this.gunGroup.dragBoundFunc((pos) => {
+            return {
+                x: Math.max(-30, Math.min(this.currentStageWidth - 30, pos.x)),
+                y: this.currentStageHeight - this.gunHeight - this.gunBase
+            }
+        });
         this.gunGroup.add(this.AAGunNode);
         this.gunGroup.add(this.fireButtonNode);
         this.gunLayer.add(this.gunGroup);
         this.stage.add(this.gunLayer);
+
+        // AirCraft
+        this.aircraftLayer.add(this.bomberNode);
+        this.stage.add(this.aircraftLayer);
 
         // Draw the Scene
         this.stage.batchDraw();
@@ -220,6 +256,11 @@ export const stageArea = {
 
         url = "assets/images/fireButton.png";
         varName = "fireButton";
+        await this.loadImage(url, varName);
+
+        // Aircraft Views
+        url = "assets/images/bomberFront01.png";
+        varName = "bomberFront";
         await this.loadImage(url, varName);
     },
 

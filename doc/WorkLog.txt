@@ -1,13 +1,15 @@
 Work Log
 
+Project Start: 29/02/2026
+
 Jobs Due
 
-    Create the index.html with Konva graphics incorporated
+    * Create the index.html with Konva graphics incorporated
         (see game fireflies)
-        Do the menu (home/intro/restart)
+        * Do the menu (home/intro/restart)
 
-    Create main.js as a module
-        Do initial stage scaling
+    * Create main.js as a module
+        * Do initial stage scaling
 
     Assemble Graphics
         Aircraft
@@ -15,15 +17,19 @@ Jobs Due
             Rightward toward
             Tail view leftward
             Tail view rightward
-        AA Gun
-        City Buildings
+            Straight-on view
+            Tail-on view
+        * AA Gun
+        * City Buildings
         City Buildings bombed
-        Skyscape
-            4 sizes
+        * Skyscape
+            * 4 sizes
         Speaker Icon 
         Favicon
         Game Icon
         
+    Plan-out the straight flight paths
+    
     * Do the initial analysis
 
     * Do the README
