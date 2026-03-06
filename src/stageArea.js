@@ -43,6 +43,8 @@ export const stageArea = {
     bombNodes: [],
     bombWidth: 12,
     bombHeight: 36,
+    bombExplosionHeight: 100,
+    bombExplosionWidth: 50,
 
     async initialise() {
         // Find the appropriate stage size
@@ -130,7 +132,15 @@ export const stageArea = {
                 width: this.bombWidth,
                 height: this.bombHeight
             }));
-        }
+        };
+
+        this.bombExplosionNode = new Konva.Image({
+            image: this.images['bombExplosion'],
+            x: 0,
+            y: 0,
+            width: this.bombExplosionWidth,
+            height: this.bombExplosionHeight
+        });
 
         this.drawScene();
     },
@@ -213,6 +223,18 @@ export const stageArea = {
         if (start) {
             this.aircraftLayer.add(this.bombNodes[bombNum]);
         }
+        this.aircraftLayer.draw();
+    },
+
+    setBombExplosion(x, y) {
+        this.bombExplosionNode.x(x);
+        this.bombExplosionNode.y(y);
+        this.aircraftLayer.add(this.bombExplosionNode);
+        this.aircraftLayer.draw();
+    },
+
+    clearBombExplosion() {
+        this.bombExplosionNode.remove();
         this.aircraftLayer.draw();
     },
 
@@ -303,6 +325,11 @@ export const stageArea = {
         // Bomb
         url = "assets/images/bomb01.png";
         varName = "bomb";
+        await this.loadImage(url, varName);
+
+        // Bomb Explosion
+        url = "assets/images/buildingExplosion.png";
+        varName = "bombExplosion";
         await this.loadImage(url, varName);
     },
 
