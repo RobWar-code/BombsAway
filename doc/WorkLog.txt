@@ -17,8 +17,10 @@ Jobs Due
             Rightward toward
             Tail view leftward
             Tail view rightward
-            Straight-on view
+            * Straight-on view
             Tail-on view
+        * Bomb
+        Bomb Explosion
         * AA Gun
         * City Buildings
         City Buildings bombed
@@ -26,9 +28,15 @@ Jobs Due
             * 4 sizes
         Speaker Icon 
         Favicon
-        Game Icon
+        * Game Icon
         
-    Plan-out the straight flight paths
+    Do the bomb drops
+
+    Do the bomb explosions
+
+    Do the building destruction
+
+    * Do the straight flight paths
     
     * Do the initial analysis
 

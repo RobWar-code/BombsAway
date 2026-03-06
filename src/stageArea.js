@@ -33,11 +33,16 @@ export const stageArea = {
     fireButtonHeight: 40,
     // Bomber
     bomberHorizon: 300,
-    minBomberY: 50,
+    minBomberY: 10,
     minBomberWidth: 30,
-    maxBomberWidth: 100,
+    maxBomberWidth: 150,
     minBomberHeight: 12,
-    maxBomberHeight: 40,
+    maxBomberHeight: 60,
+    // Bombs
+    numBombs: 4,
+    bombNodes: [],
+    bombWidth: 12,
+    bombHeight: 36,
 
     async initialise() {
         // Find the appropriate stage size
@@ -116,6 +121,17 @@ export const stageArea = {
             height: this.minBomberHeight
         });
 
+        // Bombs
+        for (let i = 0; i < this.numBombs; i++) {
+            this.bombNodes.push(new Konva.Image({
+                image: this.images['bomb'],
+                x: 0,
+                y: 0,
+                width: this.bombWidth,
+                height: this.bombHeight
+            }));
+        }
+
         this.drawScene();
     },
 
@@ -175,11 +191,33 @@ export const stageArea = {
         return set;
     },
 
-    setBomber(x, y, w, h) {
+    setBomber(start, x, y, w, h) {
         this.bomberNode.x(x);
         this.bomberNode.y(y);
         this.bomberNode.width(w);
         this.bomberNode.height(h);
+        if (start) {
+            this.aircraftLayer.add(this.bomberNode);
+        }
+        this.aircraftLayer.draw();
+    },
+
+    clearBomber() {
+        this.bomberNode.remove();
+        this.aircraftLayer.draw();
+    },
+
+    setBomb(start, bombNum, x, y) {
+        this.bombNodes[bombNum].x(x);
+        this.bombNodes[bombNum].y(y);
+        if (start) {
+            this.aircraftLayer.add(this.bombNodes[bombNum]);
+        }
+        this.aircraftLayer.draw();
+    },
+
+    clearBomb(bombNum) {
+        this.bombNodes[bombNum].remove();
         this.aircraftLayer.draw();
     },
 
@@ -220,7 +258,6 @@ export const stageArea = {
         this.stage.add(this.gunLayer);
 
         // AirCraft
-        this.aircraftLayer.add(this.bomberNode);
         this.stage.add(this.aircraftLayer);
 
         // Draw the Scene
@@ -261,6 +298,11 @@ export const stageArea = {
         // Aircraft Views
         url = "assets/images/bomberFront01.png";
         varName = "bomberFront";
+        await this.loadImage(url, varName);
+
+        // Bomb
+        url = "assets/images/bomb01.png";
+        varName = "bomb";
         await this.loadImage(url, varName);
     },
 

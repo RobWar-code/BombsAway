@@ -83,20 +83,22 @@ Contents
 
 <h3>Aircraft Motion
 
-    Aircraft appear at small scale in the upper portion of the stage. They 
+    Aircraft appear at small scale at a fixed horizon of the stage. They 
     then travel through the Z dimension (by scaling) as well as the X and Y.
-    They move in smooth curves toward the city (FlyOver, Figure of 8 or 
-    ellipse in Z and X on a single Y Plane)
+    They move in straight lines toward the city also drifting through X.
+    (FlyOver, We might also consider: Figure of 8 or ellipse in Z and X on a 
+    single Y Plane)
 
-    The Z dimension ranges from 500 to 0 (at which the plane disappears).
+    The Z dimension is apparent from the scaling and vertical position of the
+    bomber.
 
-    In the course of its journey through Z, the length of the plane image ranges 
-    from 20 pixels to 70. The image of the aircraft has an approaching view and a 
+    In the course of its journey through Z, the width of the plane image ranges 
+    from 30 pixels to 140. The image of the aircraft has an approaching view and a 
     tail-on retreating view. It also has leftward and rightward views, depending
     on the relative x-coordinate of the centre of the stage.
 
-    When they reach Z <= 20 they release their bombs which destroy any 
-    buildings in the path of the bombs. Each plane has 4 bombs.
+    When they reach approach count = 26  & count = 27 they release their bombs which 
+    destroy any buildings in the path of the bombs. Each plane has 4 bombs.
 
     The anti-aircraft fire must be x/y accurate in the Z aircraft range 50 to 0.
 
