@@ -26,6 +26,7 @@ export const stageArea = {
     buildingHeight: 70,
     buildingList: [], // Building Image No.s {id: "", bombed: false}
     buildingSet: [], // Image Nodes
+    numBuildingsBombed: 0,
     gunHeight: 90,
     gunWidth: 65,
     gunBase: 5,
@@ -72,6 +73,8 @@ export const stageArea = {
 
         // Layout the initial graphics
         this.layoutGraphics();
+
+        this.numBuildingsBombed = 0;
     },
 
     layoutGraphics() {
@@ -179,6 +182,7 @@ export const stageArea = {
             let id = building.id;
             let buildingImage = this.images[`building${id}`];
             let buildingNode = new Konva.Image({
+                id: id,
                 image: buildingImage,
                 x: index * this.buildingWidth,
                 y: this.currentStageHeight - this.buildingHeight - this.foregroundStripHeight,
@@ -226,6 +230,11 @@ export const stageArea = {
         this.aircraftLayer.draw();
     },
 
+    clearBomb(bombNum) {
+        this.bombNodes[bombNum].remove();
+        this.aircraftLayer.draw();
+    },
+
     setBombExplosion(x, y) {
         this.bombExplosionNode.x(x);
         this.bombExplosionNode.y(y);
@@ -238,9 +247,21 @@ export const stageArea = {
         this.aircraftLayer.draw();
     },
 
-    clearBomb(bombNum) {
-        this.bombNodes[bombNum].remove();
-        this.aircraftLayer.draw();
+    setBombedBuilding(buildingNum) {
+        let buildingItem = this.buildingList[buildingNum];
+        if (buildingItem.bombed === false) {
+            console.log("Got to setBombedBuilding", buildingNum);
+            buildingItem.bombed = true;
+            let id = buildingItem.id;
+            ++this.numBuildingsBombed;
+            this.buildingSet[buildingNum].image(this.images[`buildingBombed${id}`]);
+            /*
+            let building = this.buildingGroup.findOne(`#${id}`);
+            building.destroy();
+            this.buildingGroup.add(this.buildingSet[buildingNum]);
+            */
+            this.mainImageLayer.draw();
+        }       
     },
 
     drawScene() {
@@ -305,6 +326,9 @@ export const stageArea = {
             if (i < 9) id = "0" + id;
             let url = `assets/images/building${id}.png`;
             let varName = `building${id}`;
+            await this.loadImage(url, varName);
+            url = `assets/images/buildingBombed${id}.png`;
+            varName = `buildingBombed${id}`;
             await this.loadImage(url, varName);
         }
 

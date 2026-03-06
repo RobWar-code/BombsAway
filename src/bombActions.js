@@ -40,6 +40,7 @@ export const bombActions = {
             stageArea.setBombExplosion(x, y);
             setTimeout(() => {
                 stageArea.clearBombExplosion();
+                stageArea.setBombedBuilding(buildingNum);
             }, 400);
         }
     }
