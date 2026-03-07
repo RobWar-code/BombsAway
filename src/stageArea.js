@@ -1,3 +1,5 @@
+import { gunActions } from './gunActions.js';
+
 export const stageArea = {
 
     host: document.getElementById('stageHost'),
@@ -27,11 +29,21 @@ export const stageArea = {
     buildingList: [], // Building Image No.s {id: "", bombed: false}
     buildingSet: [], // Image Nodes
     numBuildingsBombed: 0,
+    // Gun
     gunHeight: 90,
     gunWidth: 65,
     gunBase: 5,
     fireButtonWidth: 40,
     fireButtonHeight: 40,
+    
+    // Shell
+    shellHeight: 14,
+    shellWidth: 8,
+    gunBlastWidth: 14,
+    gunBlastHeight: 50,
+    shellExplosionWidth: 80,
+    shellExplosionHeight: 80,
+    
     // Bomber
     bomberHorizon: 300,
     minBomberY: 10,
@@ -39,6 +51,9 @@ export const stageArea = {
     maxBomberWidth: 150,
     minBomberHeight: 12,
     maxBomberHeight: 60,
+    bomberExplodedWidth: 150,
+    bomberExplodedHeight: 60,
+
     // Bombs
     numBombs: 4,
     bombNodes: [],
@@ -117,6 +132,19 @@ export const stageArea = {
             height: this.fireButtonHeight 
         });
 
+        this.fireButtonNode.on("click", (e) => {
+            gunActions.fire();
+        });
+
+        this.gunBlastNode = new Konva.Image({
+            image: this.images['gunBlast'],
+            x: 0,
+            y: this.currentStageHeight - this.gunHeight - this.gunBlastHeight - 10 + 
+                this.gunBase,
+            width: this.gunBlastWidth,
+            height: this.gunBlastHeight
+        });
+
         // Aircraft Nodes
         this.bomberNode = new Konva.Image({
             image: this.images['bomberFront'],
@@ -124,6 +152,14 @@ export const stageArea = {
             y: this.bomberHorizon,
             width: this.minBomberWidth,
             height: this.minBomberHeight
+        });
+
+        this.bomberExplodedNode = new Konva.Image({
+            image: this.images['bomberExploded'],
+            x: 0,
+            y: 0,
+            width: this.bomberExplodedWidth,
+            height: this.bomberExplodedHeight
         });
 
         // Bombs
@@ -143,6 +179,23 @@ export const stageArea = {
             y: 0,
             width: this.bombExplosionWidth,
             height: this.bombExplosionHeight
+        });
+
+        // Shell
+        this.shellNode = new Konva.Image({
+            image: this.images['shell'],
+            x: 0,
+            y: 0,
+            width: this.shellWidth,
+            height: this.shellHeight
+        });
+
+        this.shellExplosionNode = new Konva.Image({
+            image: this.images['shellExplosion'],
+            x: 0,
+            y: 0,
+            width: this.shellExplosionWidth,
+            height: this.shellExplosionHeight
         });
 
         this.drawScene();
@@ -250,18 +303,48 @@ export const stageArea = {
     setBombedBuilding(buildingNum) {
         let buildingItem = this.buildingList[buildingNum];
         if (buildingItem.bombed === false) {
-            console.log("Got to setBombedBuilding", buildingNum);
             buildingItem.bombed = true;
             let id = buildingItem.id;
             ++this.numBuildingsBombed;
             this.buildingSet[buildingNum].image(this.images[`buildingBombed${id}`]);
-            /*
-            let building = this.buildingGroup.findOne(`#${id}`);
-            building.destroy();
-            this.buildingGroup.add(this.buildingSet[buildingNum]);
-            */
             this.mainImageLayer.draw();
         }       
+    },
+
+    setGunBlast(x) {
+        this.gunBlastNode.x(x);
+        this.gunLayer.add(this.gunBlastNode);
+        this.gunLayer.draw();
+    },
+
+    clearGunBlast() {
+        this.gunBlastNode.remove();
+        this.gunLayer.draw();
+    },
+
+    setShell(start, shellLayer, shellX, shellY) {
+        this.shellNode.x(shellX);
+        this.shellNode.y(shellY);
+        if (start) {
+            shellLayer.add(this.shellNode);
+        }
+        shellLayer.draw();
+    },
+
+    clearShell(shellLayer) {
+        this.shellNode.remove();
+        shellLayer.draw();
+    },
+
+    setShellExplosion(shellLayer, x, y) {
+        this.shellExplosionNode.x(x);
+        this.shellExplosionNode.y(y);
+        shellLayer.add(this.shellExplosionNode);
+    },
+
+    clearShellExplosion(shellLayer) {
+        this.shellExplosionNode.remove();
+        shellLayer.draw();
     },
 
     drawScene() {
@@ -346,6 +429,10 @@ export const stageArea = {
         varName = "bomberFront";
         await this.loadImage(url, varName);
 
+        url = "assets/images/bomberExploded.png";
+        varName = "bomberExploded";
+        await this.loadImage(url, varName);
+
         // Bomb
         url = "assets/images/bomb01.png";
         varName = "bomb";
@@ -355,6 +442,20 @@ export const stageArea = {
         url = "assets/images/buildingExplosion.png";
         varName = "bombExplosion";
         await this.loadImage(url, varName);
+
+        // Shell
+        url = "assets/images/shell.png";
+        varName = "shell";
+        await this.loadImage(url, varName);
+
+        url = "assets/images/shellExplosion.png";
+        varName = "shellExplosion";
+        await this.loadImage(url, varName);
+
+        url = "assets/images/gunBlast.png";
+        varName = "gunBlast";
+        await this.loadImage(url, varName);
+
     },
 
     loadImage(url, varName, crossOrigin = 'anonymous') {
