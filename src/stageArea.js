@@ -1,4 +1,5 @@
 import { gunActions } from './gunActions.js';
+import { game } from './game.js';
 
 export const stageArea = {
 
@@ -308,6 +309,7 @@ export const stageArea = {
             ++this.numBuildingsBombed;
             this.buildingSet[buildingNum].image(this.images[`buildingBombed${id}`]);
             this.mainImageLayer.draw();
+            game.setBuildingBombedPoints();
         }       
     },
 
@@ -345,6 +347,18 @@ export const stageArea = {
     clearShellExplosion(shellLayer) {
         this.shellExplosionNode.remove();
         shellLayer.draw();
+    },
+
+    setBomberExplosion(x, y) {
+        this.bomberExplodedNode.x(x);
+        this.bomberExplodedNode.y(y);
+        this.aircraftLayer.add(this.bomberExplodedNode);
+        this.aircraftLayer.draw();
+    },
+
+    clearBomberExplosion() {
+        this.bomberExplodedNode.remove();
+        this.aircraftLayer.draw();
     },
 
     drawScene() {

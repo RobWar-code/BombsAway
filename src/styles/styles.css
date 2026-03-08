@@ -27,3 +27,21 @@ body {
 #stageHost {
     border: 2px solid black;
 }
+
+/* Information Div */
+#infoTable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid black;
+    background-color: #e070e0;
+}
+
+#soundCell {
+    width: 64px;
+    border: 2px solid black;
+}
+
+#pointsCell {
+    border: 2px solid black;
+    text-align: right;
+}

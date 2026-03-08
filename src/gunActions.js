@@ -1,5 +1,6 @@
 import { stageArea } from './stageArea.js';
 import { bomberActions } from './bomberActions.js';
+import { game } from './game.js';
 
 export const gunActions = {
     gunLocked: false,
@@ -42,13 +43,31 @@ export const gunActions = {
 
         let shellInterval = setInterval(() => {
             shellY -= dy;
-            stageArea.setShell(start, shellLayer, shellX, shellY);
-            ++count;
-            if (count >= this.numShellSteps) {
-                this.explodeShell(shellLayer, shellX, shellY);
+            // Check whether a bomber struck
+            let bx = bomberActions.posX;
+            let dbx = Math.abs(bx - shellX);
+            let w = stageArea.maxBomberWidth;
+            let by = bomberActions.posY;
+            let dby = by - shellY;
+            let h = stageArea.maxBomberHeight;
+            let z = bomberActions.posCount;
+            if ((dbx < (w - 20) / 2) && (dby > 0 && dby < h + 10) && 
+                (z >= bomberActions.bomberHitLow && z <= bomberActions.bomberHitHigh)) {
                 stageArea.clearShell(shellLayer);
+                bomberActions.explodeBomber();
                 clearInterval(shellInterval);
+                game.setBomberHitPoints();
                 this.gunLocked = false;
+            }
+            else {
+                stageArea.setShell(start, shellLayer, shellX, shellY);
+                ++count;
+                if (count >= this.numShellSteps) {
+                    this.explodeShell(shellLayer, shellX, shellY);
+                    stageArea.clearShell(shellLayer);
+                    clearInterval(shellInterval);
+                    this.gunLocked = false;
+                }
             }
         }, 60);
     },

@@ -33,12 +33,16 @@ Contents
     aircraft.
 
     When the aircraft comes within range of the city it drops its
-    bombs (up to 4) on the buildings below.
+    bombs (up to 4, currently 1) on the buildings below.
 
     The player scores points for destroying an aircraft and loses points
-    for buildings bombed.
+    for buildings bombed. 40 points for destroying an aircraft -10 for
+    a building bombed.
 
-    Play continues until a set number of raids have been executed
+    Play continues until a set number of raids have been executed. The number
+    of raids depends on the stage width (number of buildings).
+
+    The game also ends once all of the buildings have been bombed.
 
 <h1>Display Layout
     The display consists of

@@ -2,10 +2,10 @@ import { stageArea } from './stageArea.js';
 import { bombActions } from './bombActions.js';
 
 export const bomberActions = {
-    numApproachSteps: 36,
-    approachStepInterval: 80,
+    numApproachSteps: 48,
+    approachStepInterval: 100,
     bomberApproachTime: 36 * 80,
-    bombsAwayCount: 30,
+    bombsAwayCount: 40,
     numBombs: 1,
     bombsDropped: 0,
     posCount: 0,
@@ -13,8 +13,9 @@ export const bomberActions = {
     posY: 0,
     aircraftWidth: 0,
     aircraftHeight: 0,
-    bomberHitLow: 25,
-    bomberHitHigh: 30,
+    bomberHitLow: 32,
+    bomberHitHigh: 40,
+    approachInterval: null,
 
     approach() {
         let sy = stageArea.bomberHorizon;
@@ -50,7 +51,7 @@ export const bomberActions = {
         this.aircraftWidth = w;
         this.aircraftHeight = h;
 
-        let approachInterval = setInterval(() => {
+        this.approachInterval = setInterval(() => {
             x = x + dx;
             y = y + dy;
             w = w + dw;
@@ -63,7 +64,7 @@ export const bomberActions = {
 
             ++this.posCount;
             if (this.posCount >= this.numApproachSteps) {
-                clearInterval(approachInterval);
+                clearInterval(this.approachInterval);
                 stageArea.clearBomber();
                 this.posCount = 0;
             }
@@ -72,5 +73,15 @@ export const bomberActions = {
                 ++this.bombsDropped;
             }
        }, this.approachStepInterval);
+    },
+
+    explodeBomber() {
+        clearInterval(this.approachInterval);
+        stageArea.clearBomber();
+        stageArea.setBomberExplosion(this.posX, this.posY);
+        setTimeout(() => {
+            stageArea.clearBomberExplosion();
+        }, 400);
+        this.posCount = 0;
     }
 }

@@ -4,6 +4,36 @@ Project Start: 29/02/2026
 
 Jobs Due
 
+    Assemble Graphics
+        Aircraft
+            Leftward toward
+            Rightward toward
+            Tail view leftward
+            Tail view rightward
+            Tail-on view
+        Speaker Icon 
+        Favicon
+
+    Adjust motions for playability
+
+    * Overcome flicker on aircraft layer after bomber explosion
+
+    Fix the shell hit accuracy (has leftward bias)
+
+    * Determine the scoring
+
+    * Do the scoring
+        * Building Destroyed
+        * Aircraft Destroyed
+
+    Allow for end of game when all buildings bombed
+
+    Set the HTML for the scoring and speaker Icon
+
+Jobs Done
+
+    08/03/2026
+    
     * Create the index.html with Konva graphics incorporated
         (see game fireflies)
         * Do the menu (home/intro/restart)
@@ -13,28 +43,31 @@ Jobs Due
 
     Assemble Graphics
         Aircraft
-            Leftward toward
-            Rightward toward
-            Tail view leftward
-            Tail view rightward
             * Straight-on view
-            Tail-on view
+            * Bomber Exploded
         * Bomb
-        Bomb Explosion
+        * Bomb Explosion
+        * Shell
+        * Shell Explosion
+        * Gun Fire
         * AA Gun
         * City Buildings
-        City Buildings bombed
+        * City Buildings bombed
         * Skyscape
             * 4 sizes
-        Speaker Icon 
-        Favicon
         * Game Icon
         
-    Do the bomb drops
+    * Do the shell launch
 
-    Do the bomb explosions
+    * Do the shell explosion
 
-    Do the building destruction
+    * Do the aircraft hit explosion
+
+    * Do the bomb drops
+
+    * Do the bomb explosions
+
+    * Do the building destruction
 
     * Do the straight flight paths
     
@@ -43,5 +76,3 @@ Jobs Due
     * Do the README
 
     * Set-up git
-
-Jobs Done
