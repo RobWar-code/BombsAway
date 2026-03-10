@@ -13,7 +13,7 @@ export const game = {
 
     start() {
         this.setGameConstants();
-        let bomberInterval = bomberActions.bomberApproachTime + 2000;
+        let bomberInterval = bomberActions.bomberApproachTime + 4000;
         let count = 0;
         let bombRunInterval = setInterval(() => {
             bomberActions.approach();
@@ -25,7 +25,7 @@ export const game = {
     },
 
     setBuildingBombedPoints() {
-        this.points -= this.buildingBombedPoints;
+        this.points += this.buildingBombedPoints;
         this.displayScore();
     },
 

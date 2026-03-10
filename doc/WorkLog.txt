@@ -26,6 +26,12 @@ Jobs Due
         * Building Destroyed
         * Aircraft Destroyed
 
+    Do the sound effects
+        Bomb Exploding
+        Gun Firing
+        Aircraft Exploding
+        Aircraft flying Over 
+        
     Allow for end of game when all buildings bombed
 
     Set the HTML for the scoring and speaker Icon

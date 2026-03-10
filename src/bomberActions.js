@@ -2,10 +2,10 @@ import { stageArea } from './stageArea.js';
 import { bombActions } from './bombActions.js';
 
 export const bomberActions = {
-    numApproachSteps: 48,
+    numApproachSteps: 56,
     approachStepInterval: 100,
-    bomberApproachTime: 36 * 80,
-    bombsAwayCount: 40,
+    bomberApproachTime: 56 * 100,
+    bombsAwayCount: 46,
     numBombs: 1,
     bombsDropped: 0,
     posCount: 0,
@@ -13,8 +13,8 @@ export const bomberActions = {
     posY: 0,
     aircraftWidth: 0,
     aircraftHeight: 0,
-    bomberHitLow: 32,
-    bomberHitHigh: 40,
+    bomberHitLow: 38,
+    bomberHitHigh: 44,
     approachInterval: null,
 
     approach() {

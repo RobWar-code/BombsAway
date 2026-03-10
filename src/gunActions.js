@@ -44,14 +44,14 @@ export const gunActions = {
         let shellInterval = setInterval(() => {
             shellY -= dy;
             // Check whether a bomber struck
-            let bx = bomberActions.posX;
+            let w = stageArea.maxBomberWidth * 2/3;
+            let bx = bomberActions.posX + w / 2;
             let dbx = Math.abs(bx - shellX);
-            let w = stageArea.maxBomberWidth;
             let by = bomberActions.posY;
             let dby = by - shellY;
             let h = stageArea.maxBomberHeight;
             let z = bomberActions.posCount;
-            if ((dbx < (w - 20) / 2) && (dby > 0 && dby < h + 10) && 
+            if ((dbx < w / 2) && (dby > 0 && dby < h + 10) && 
                 (z >= bomberActions.bomberHitLow && z <= bomberActions.bomberHitHigh)) {
                 stageArea.clearShell(shellLayer);
                 bomberActions.explodeBomber();
