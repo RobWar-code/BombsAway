@@ -1,6 +1,7 @@
 import { stageArea } from './stageArea.js';
 import { bomberActions } from './bomberActions.js';
 import { game } from './game.js';
+import { soundEffects } from './soundEffects.js';
 
 export const gunActions = {
     gunLocked: false,
@@ -31,6 +32,9 @@ export const gunActions = {
         if (bomberActions.posCount < bomberActions.bomberHitLow) {
             shellLayer = stageArea.aircraftLayer;
         }
+
+        // Sound Effects
+        soundEffects.play("gun");
 
         let start = true;
         stageArea.setShell(start, shellLayer, shellX, shellY);
@@ -73,6 +77,7 @@ export const gunActions = {
     },
 
     explodeShell(shellLayer, shellX, shellY) {
+        soundEffects.explode();
         let x = shellX + stageArea.shellWidth/2 - stageArea.shellExplosionWidth/2;
         let y = shellY + stageArea.shellHeight/2 - stageArea.shellExplosionHeight/2;
         stageArea.setShellExplosion(shellLayer, x, y);

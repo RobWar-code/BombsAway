@@ -1,5 +1,6 @@
 import { stageArea } from './stageArea.js';
 import { bombActions } from './bombActions.js';
+import { soundEffects } from './soundEffects.js';
 
 export const bomberActions = {
     numApproachSteps: 56,
@@ -79,6 +80,7 @@ export const bomberActions = {
         clearInterval(this.approachInterval);
         stageArea.clearBomber();
         stageArea.setBomberExplosion(this.posX, this.posY);
+        soundEffects.play("aircraftExplode");
         setTimeout(() => {
             stageArea.clearBomberExplosion();
         }, 400);

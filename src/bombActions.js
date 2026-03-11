@@ -1,4 +1,5 @@
 import { stageArea } from './stageArea.js';
+import { soundEffects } from './soundEffects.js';
 
 export const bombActions = {
     numDropSteps: 20,
@@ -38,6 +39,7 @@ export const bombActions = {
             let y = stageArea.currentStageHeight - stageArea.foregroundStripHeight - 
                 stageArea.buildingHeight/2 - stageArea.bombExplosionHeight;
             stageArea.setBombExplosion(x, y);
+            soundEffects.play("bomb");
             setTimeout(() => {
                 stageArea.clearBombExplosion();
                 stageArea.setBombedBuilding(buildingNum);
