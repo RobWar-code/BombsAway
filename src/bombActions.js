@@ -5,6 +5,10 @@ export const bombActions = {
     numDropSteps: 20,
     dropInterval: 80,
 
+    clearDown() {
+        clearInterval(this.bombDropInterval);
+    },
+
     dropBomb(bombNum, dx, px, py) {
         let sy = py + stageArea.maxBomberHeight;
         let sx = px + stageArea.maxBomberWidth / 2 - stageArea.bombWidth / 2;
@@ -18,7 +22,7 @@ export const bombActions = {
         let count = 0;
         let x = sx;
         let y = sy;
-        let bombDropInterval = setInterval(() => {
+        this.bombDropInterval = setInterval(() => {
             x += dx;
             y += dy;
             stageArea.setBomb(start, bombNum, x, y);
@@ -26,7 +30,7 @@ export const bombActions = {
             if (count >= this.numDropSteps) {
                 stageArea.clearBomb(bombNum);
                 this.doBombExplosion(x);
-                clearInterval(bombDropInterval);
+                clearInterval(this.bombDropInterval);
             }
         }, this.dropInterval)
     },
@@ -35,15 +39,17 @@ export const bombActions = {
         // Determine the building position that is hit (if any)
         if (px >= 0 && px < stageArea.currentStageWidth) {
             let buildingNum = Math.floor(px / stageArea.buildingWidth);
-            let x = buildingNum * stageArea.buildingWidth - 5;
-            let y = stageArea.currentStageHeight - stageArea.foregroundStripHeight - 
-                stageArea.buildingHeight/2 - stageArea.bombExplosionHeight;
-            stageArea.setBombExplosion(x, y);
-            soundEffects.play("bomb");
-            setTimeout(() => {
-                stageArea.clearBombExplosion();
-                stageArea.setBombedBuilding(buildingNum);
-            }, 400);
+            if (buildingNum < stageArea.numBuildings) {
+                let x = buildingNum * stageArea.buildingWidth - 5;
+                let y = stageArea.currentStageHeight - stageArea.foregroundStripHeight - 
+                    stageArea.buildingHeight/2 - stageArea.bombExplosionHeight;
+                stageArea.setBombExplosion(x, y);
+                soundEffects.play("bomb");
+                setTimeout(() => {
+                    stageArea.clearBombExplosion();
+                    stageArea.setBombedBuilding(buildingNum);
+                }, 400);
+            }
         }
     }
 }

@@ -18,6 +18,12 @@ export const bomberActions = {
     bomberHitHigh: 44,
     approachInterval: null,
 
+    clearDown() {
+        clearInterval(this.approachInterval);
+        soundEffects.bomberStop();
+        bombActions.clearDown();
+    },
+
     approach() {
         let sy = stageArea.bomberHorizon;
         let dy = -((sy - stageArea.minBomberY) / this.numApproachSteps);
@@ -38,6 +44,7 @@ export const bomberActions = {
 
         let start = true
         stageArea.setBomber(start, sx, sy, sw, sh);
+        soundEffects.bomberStart();
         start = false;
 
         // Step move the aircraft
@@ -67,6 +74,7 @@ export const bomberActions = {
             if (this.posCount >= this.numApproachSteps) {
                 clearInterval(this.approachInterval);
                 stageArea.clearBomber();
+                soundEffects.bomberStop();
                 this.posCount = 0;
             }
             if (this.posCount >= this.bombsAwayCount && this.bombsDropped < this.numBombs) {
@@ -80,6 +88,7 @@ export const bomberActions = {
         clearInterval(this.approachInterval);
         stageArea.clearBomber();
         stageArea.setBomberExplosion(this.posX, this.posY);
+        soundEffects.bomberStop();
         soundEffects.play("aircraftExplode");
         setTimeout(() => {
             stageArea.clearBomberExplosion();

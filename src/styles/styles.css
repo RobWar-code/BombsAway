@@ -23,6 +23,24 @@ body {
     text-align: right;
 }
 
+/* Introduction */
+#introDiv {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding-bottom: 15px;
+    text-align: center;
+    background-color: rgba(150, 150, 50, 0.9);
+    z-index: 5;
+}
+
+#introDiv p {
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 6px;
+}
+
 /* Stage */
 #stageHost {
     border: 2px solid black;

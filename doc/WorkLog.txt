@@ -11,14 +11,33 @@ Jobs Due
             Tail view leftward
             Tail view rightward
             Tail-on view
-        Speaker Icon 
+        * Speaker Icon 
         Favicon
+
+    Move status report to a cell of the options table.
+
+    Allow for end of game when all buildings bombed
+
+    Allow for end of game when all flights flown
 
     Adjust motions for playability
 
+    Allow for window resized to restart
+
+Jobs Done
+
+    12/03/2026
+
+    * Restart option
+
+    * Do the intro panel and game start.
+
+    * Occasional bug at line 306 - stageArea.js, buildItem undefined (probably
+    invalid buildingNum)
+
     * Overcome flicker on aircraft layer after bomber explosion
 
-    Fix the shell hit accuracy (has leftward bias)
+    * Fix the shell hit accuracy (has leftward bias)
 
     * Determine the scoring
 
@@ -26,17 +45,14 @@ Jobs Due
         * Building Destroyed
         * Aircraft Destroyed
 
-    Do the sound effects
-        Bomb Exploding
-        Gun Firing
-        Aircraft Exploding
-        Aircraft flying Over 
+    * Do the sound effects
+        * Bomb Exploding
+        * Gun Firing
+        * Aircraft Exploding
+        * Aircraft flying Over 
         
-    Allow for end of game when all buildings bombed
 
-    Set the HTML for the scoring and speaker Icon
-
-Jobs Done
+    * Set the HTML for the scoring and speaker Icon
 
     08/03/2026
     

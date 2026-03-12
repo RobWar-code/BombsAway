@@ -6,6 +6,11 @@ import { soundEffects } from './soundEffects.js';
 export const gunActions = {
     gunLocked: false,
     numShellSteps: 24,
+    shellInterval: null,
+
+    clearDown() {
+        clearInterval(this.shellInterval);
+    },
 
     fire() {
         if (this.gunLocked) return;
@@ -45,7 +50,7 @@ export const gunActions = {
         let dy = (stageArea.currentStageHeight - (stageArea.currentStageHeight - shellY) - 40) 
             / this.numShellSteps;
 
-        let shellInterval = setInterval(() => {
+        this.shellInterval = setInterval(() => {
             shellY -= dy;
             // Check whether a bomber struck
             let w = stageArea.maxBomberWidth * 2/3;
@@ -59,7 +64,7 @@ export const gunActions = {
                 (z >= bomberActions.bomberHitLow && z <= bomberActions.bomberHitHigh)) {
                 stageArea.clearShell(shellLayer);
                 bomberActions.explodeBomber();
-                clearInterval(shellInterval);
+                clearInterval(this.shellInterval);
                 game.setBomberHitPoints();
                 this.gunLocked = false;
             }
@@ -69,7 +74,7 @@ export const gunActions = {
                 if (count >= this.numShellSteps) {
                     this.explodeShell(shellLayer, shellX, shellY);
                     stageArea.clearShell(shellLayer);
-                    clearInterval(shellInterval);
+                    clearInterval(this.shellInterval);
                     this.gunLocked = false;
                 }
             }

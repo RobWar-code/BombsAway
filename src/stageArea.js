@@ -63,7 +63,23 @@ export const stageArea = {
     bombExplosionHeight: 100,
     bombExplosionWidth: 50,
 
+    clearDown() {
+        // Clear Images
+        this.mainImageLayer.destroyChildren();
+        this.buildingGroup.destroyChildren();
+        this.gunGroup.destroyChildren();
+        this.gunLayer.destroyChildren();
+        this.aircraftLayer.destroyChildren();
+
+        this.images = [];
+        this.buildingList = [];
+        this.buildingSet = [];
+        this.bombNodes = [];
+    }, 
+
     async initialise() {
+        this.clearDown();
+
         // Find the appropriate stage size
         const windowWidth = window.innerWidth;
         let found = false;

@@ -1,27 +1,59 @@
 import { stageArea } from './stageArea.js';
 import { bomberActions } from './bomberActions.js';
+import { gunActions } from './gunActions.js';
 
 export const game = {
-    numBombRuns: 20,
+    maxBombRuns: 20,
+    numBombRuns: 0,
+    bombRunInterval: null,
     bomberHitPoints: 40,
     buildingBombedPoints: -10,
+    gameStarted: false,
+    gamePaused: false,
     points: 0,
     
     setGameConstants() {
-        this.numBombRuns = Math.floor(stageArea.numBuildings * 5);
+        this.maxBombRuns = Math.floor(stageArea.numBuildings * 5);
+    },
+
+    clearDown() {
+        clearInterval(this.bombRunInterval);
+        bomberActions.clearDown();
+        gunActions.clearDown();
+    },
+
+    restart() {
+        if (this.gameStarted) {
+            this.gameStarted = false;
+            this.gamePaused = false;
+        }
+        this.start();
     },
 
     start() {
-        this.setGameConstants();
+        this.points = 0;
+        document.getElementById("points").innerText = this.points;
         let bomberInterval = bomberActions.bomberApproachTime + 4000;
-        let count = 0;
-        let bombRunInterval = setInterval(() => {
+        if (!this.gamePaused) {
+            this.setGameConstants();
+            this.gameStarted = true;
+            this.numBombRuns = 0;
+        }
+        else {
+            this.gamePaused = false;
+        }
+        this.bombRunInterval = setInterval(() => {
             bomberActions.approach();
-            ++count;
-            if (count >= this.numBombRuns) {
-                clearInterval(bombRunInterval);
+            ++this.numBombRuns;
+            if (this.numBombRuns >= this.maxBombRuns) {
+                clearInterval(this.bombRunInterval);
             }
         }, bomberInterval);
+    },
+
+    pauseGame() {
+        this.gamePaused = true;
+        clearInterval(this.bombRunInterval);
     },
 
     setBuildingBombedPoints() {
