@@ -50,7 +50,8 @@ export const soundEffects = {
         else {
             soundOpts.noiseDur = 0.8;
         }
-        this.explode(this.audioCtx.currentTime, soundOpts);
+        let t0 = this.audioCtx.currentTime;
+        this.explode(t0, soundOpts);
     },
 
     // Create a 1-channel noise buffer (white noise).

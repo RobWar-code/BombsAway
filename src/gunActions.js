@@ -82,7 +82,7 @@ export const gunActions = {
     },
 
     explodeShell(shellLayer, shellX, shellY) {
-        soundEffects.explode();
+        soundEffects.play("shellExplode");
         let x = shellX + stageArea.shellWidth/2 - stageArea.shellExplosionWidth/2;
         let y = shellY + stageArea.shellHeight/2 - stageArea.shellExplosionHeight/2;
         stageArea.setShellExplosion(shellLayer, x, y);

@@ -152,7 +152,7 @@ export const stageArea = {
             height: this.fireButtonHeight 
         });
 
-        this.fireButtonNode.on("click", (e) => {
+        this.fireButtonNode.on("mousedown touchstart", (e) => {
             gunActions.fire();
         });
 

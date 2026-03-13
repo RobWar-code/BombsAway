@@ -24,10 +24,12 @@ Jobs Due
 
     * Allow for window resized to restart
 
-    Test on Mobile
+    * Test on Mobile
 
-    Release
+    * Release
 
+    Adjust framing of aircraft flight to allow for long X (has judder)
+    
     Consider alternative flight paths
 
     Consider difficulty levels
