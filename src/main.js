@@ -4,6 +4,14 @@ import { soundEffects } from "./soundEffects.js";
 
 init();
 
+window.addEventListener("resize", (e) => {
+    if (game.gameStarted) {
+        game.clearDown();
+        init();
+        game.restart();
+    }
+});
+
 document.getElementById("homeBtn").addEventListener("click", (e) => {
     window.location = '../index.html';
 });

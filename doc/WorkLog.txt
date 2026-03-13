@@ -12,17 +12,25 @@ Jobs Due
             Tail view rightward
             Tail-on view
         * Speaker Icon 
-        Favicon
+        * Favicon
 
-    Move status report to a cell of the options table.
+    * Move status report to a cell of the options table.
 
-    Allow for end of game when all buildings bombed
+    * Allow for end of game when all buildings bombed
 
-    Allow for end of game when all flights flown
+    * Allow for end of game when all flights flown
 
-    Adjust motions for playability
+    * Adjust motions for playability
 
-    Allow for window resized to restart
+    * Allow for window resized to restart
+
+    Test on Mobile
+
+    Release
+
+    Consider alternative flight paths
+
+    Consider difficulty levels
 
 Jobs Done
 

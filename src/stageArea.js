@@ -30,6 +30,7 @@ export const stageArea = {
     buildingList: [], // Building Image No.s {id: "", bombed: false}
     buildingSet: [], // Image Nodes
     numBuildingsBombed: 0,
+
     // Gun
     gunHeight: 90,
     gunWidth: 65,
@@ -75,6 +76,8 @@ export const stageArea = {
         this.buildingList = [];
         this.buildingSet = [];
         this.bombNodes = [];
+
+        this.numBuildingsBombed = 0;
     }, 
 
     async initialise() {

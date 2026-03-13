@@ -27,6 +27,7 @@ export const game = {
             this.gameStarted = false;
             this.gamePaused = false;
         }
+        document.getElementById("statusPara").innerText = "";
         this.start();
     },
 
@@ -45,8 +46,10 @@ export const game = {
         this.bombRunInterval = setInterval(() => {
             bomberActions.approach();
             ++this.numBombRuns;
-            if (this.numBombRuns >= this.maxBombRuns) {
+            if (this.numBombRuns >= this.maxBombRuns || 
+                stageArea.numBuildingsBombed >= stageArea.numBuildings) {
                 clearInterval(this.bombRunInterval);
+                this.gameOverActions();
             }
         }, bomberInterval);
     },
@@ -54,6 +57,20 @@ export const game = {
     pauseGame() {
         this.gamePaused = true;
         clearInterval(this.bombRunInterval);
+    },
+
+    gameOverActions() {
+        // Check whether all the buildings are bombed
+        let message = "";
+        if (stageArea.numBuildingsBombed >= stageArea.numBuildings) {
+            message = "Game Ended - all your buildings have been destroyed.";
+        }
+        else {
+            let buildingsLeft = stageArea.numBuildings - stageArea.numBuildingsBombed;
+            message = `Game Ended - the bombers are done, you saved ${buildingsLeft} buildings.`;
+        }
+        message += " Click Restart to start again.";
+        document.getElementById("statusPara").innerText = message;
     },
 
     setBuildingBombedPoints() {
